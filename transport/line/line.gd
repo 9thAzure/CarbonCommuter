@@ -69,6 +69,9 @@ func _ready() -> void:
 	station2.connected_lines.push_back(self)
 	queue_redraw()
 
+	if line_type == LineType.BIKE:
+		vehicles_on_line = 35
+
 func get_other_station(this: Station) -> Station:
 	assert(this in [station1, station2])
 
