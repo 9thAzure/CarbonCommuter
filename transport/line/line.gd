@@ -61,6 +61,7 @@ const MODE_PROPERTIES := {
 }
 
 func _ready() -> void:
+	print(name)
 	assert(station1)
 	assert(station2)
 
@@ -143,10 +144,14 @@ func get_line_path() -> PackedVector2Array:
 		position2 = t
 
 	var difference := position2 - position1
-	var middle := difference.sign() * difference.abs()[difference.abs().min_axis_index()] / 2
-	var points := PackedVector2Array([position1, position1 + middle, position2 - middle, position2])
-	return points
+	var diagonal_change := difference.sign() * difference.abs()[difference.abs().min_axis_index()]
+	var straight_change := position2 - (position1 + difference)
+	if diagonal_change.length_squared() > straight_change.length_squared():
+		diagonal_change /= 2
+		return PackedVector2Array([position1, position1 + diagonal_change, position2 - diagonal_change, position2])
 
+	straight_change /= 2
+	return PackedVector2Array([position1, position1 + straight_change, position2 - straight_change, position2])
 
 func _draw() -> void:
 	var points := get_line_path()

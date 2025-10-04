@@ -19,15 +19,17 @@ config/icon="res://icon.svg"
 
 Picker="*res://utility/picker/picker.tscn"
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
 [display]
 
 window/stretch/mode="canvas_items"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
+
 [layer_names]
 
+2d_physics/layer_15="Station"
 2d_physics/layer_16="Pickable"
 
 [rendering]
