@@ -73,7 +73,7 @@ func apply_line_mode() -> void:
 
 	# Set color based on mode
 	line_color = props.color
-	assert(distance > 0)
+	#assert(distance > 0)
 	# Calculate construction cost (will be accurate after _draw calculates distance)
 	carbon_cost = distance * base_carbon_cost * props.cost_multiplier
 
