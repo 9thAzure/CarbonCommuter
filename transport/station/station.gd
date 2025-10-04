@@ -1,5 +1,7 @@
 extends Area2D
 class_name Station
+var passenger_scene = preload("res://passengers/passenger.tscn")
+
 
 @export_range(0.1, 10, 0.1, "or_greater")
 var icon_size := 10.0
@@ -53,11 +55,11 @@ func send_passenger():
 	random_line.add_passenger(destination)
 
 func _on_spawn_traffic_timer_timeout() -> void:
-	var next_time := randf() * 3 + 2
+	var next_time := randf() * 10 + 2
 	%"SpawnTrafficTimer".wait_time = next_time
-	var wait_time := randf() + 0.5
+	var wait_time := randf() * 10 + 2
 	await get_tree().create_timer(wait_time).timeout
-	send_passenger()
+	spawn_passenger()
 
 func arrive_passenger() -> void:
 	# Passenger has arrived and despawns
@@ -66,3 +68,18 @@ func arrive_passenger() -> void:
 func add_traffic() -> void:
 	station_traffic += 1
 	print("Station Traffic" + str(station_traffic))
+
+func spawn_passenger():
+	var passenger = passenger_scene.instantiate()
+	print(passenger.position.x)
+	passenger.position.x = 30 + 20 * (station_traffic)
+	passenger.position.y = 0
+	print(passenger.position.x)
+	print(position.x)
+	passenger.passenger_type = randi_range(0, 2)
+	while (passenger.passenger_type == station_type):
+		passenger.passenger_type = randi_range(0, 2)
+	add_child(passenger)
+	add_traffic()
+	print(passenger.position.x)
+	print(position.x)

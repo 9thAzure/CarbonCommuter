@@ -74,27 +74,6 @@ func get_random_spawn_position() -> Vector2:
 	var y = randf_range(0, 648)
 	return Vector2(x, y)
 
-func spawn_passenger():
-	var passenger = passenger_scene.instantiate()
-	var stationNumber = randi_range(0, Station.stations.size() - 1)
-	var stationChosen = Station.stations[stationNumber]
-	if (stationChosen != null):
-		passenger.position.x = stationChosen.position.x + 30  + 20 * (stationChosen.station_traffic)
-		passenger.position.y = stationChosen.position.y
-		print(passenger.position.x)
-	passenger.passenger_type = randi_range(0, 2)
-	while (passenger.passenger_type == stationChosen.station_type):
-		passenger.passenger_type = randi_range(0, 2)
-	add_child(passenger)
-	print("Station Number: " + str(stationNumber))
-	Station.stations[stationNumber].add_traffic()
-		
-	print("Traffic: " + str(Station.stations[stationNumber].station_traffic))
-	print("Traffic: " + str(station.station_traffic))
-
-func _on_passenger_creation_timer_timeout() -> void:
-	spawn_passenger()
-
 func _process(_delta: float) -> void:
 	# Calculate total emissions from all lines
 	var total_emissions = 0.0
