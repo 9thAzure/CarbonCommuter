@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 Picker="*res://utility/picker/picker.tscn"
 
+[display]
+
+window/stretch/mode="canvas_items"
+
 [layer_names]
 
 2d_physics/layer_16="Pickable"
