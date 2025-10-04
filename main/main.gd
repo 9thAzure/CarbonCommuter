@@ -1,5 +1,7 @@
 extends Node
 
+@export var hud: CanvasLayer = null
+
 @export var station_scene: PackedScene
 @export var passenger_scene: PackedScene
 
@@ -18,7 +20,7 @@ func _ready():
 	var starting_stations: Array[Station] = [station, station_2, station_3, station_4, station_5, station_6, station_7]
 	Station.stations.append_array(starting_stations)
 	print(Station.stations[0])
-	@export var hud: CanvasLayer = null
+
 
 func _on_timer_timeout() -> void:
 	spawn_station()
