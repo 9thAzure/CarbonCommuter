@@ -18,6 +18,22 @@ station_type = 1
 position = Vector2(244, 302)
 station_type = 2
 
+[node name="Station4" parent="." instance=ExtResource("1_53q0u")]
+position = Vector2(135, 400)
+station_type = 2
+
+[node name="Station5" parent="." instance=ExtResource("1_53q0u")]
+position = Vector2(520, 481)
+station_type = 2
+
+[node name="Station6" parent="." instance=ExtResource("1_53q0u")]
+position = Vector2(433, 100)
+station_type = 2
+
+[node name="Station7" parent="." instance=ExtResource("1_53q0u")]
+position = Vector2(768, 313)
+station_type = 2
+
 [node name="Line" parent="." node_paths=PackedStringArray("station1", "station2") instance=ExtResource("2_pjrb6")]
 station1 = NodePath("../Station")
 station2 = NodePath("../Station2")

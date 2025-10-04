@@ -10,7 +10,7 @@ var station2 : Station
 @export
 var line_type := LineType.BUS
 
-enum LineType { BUS, METRO, BIKE }
+enum LineType { BUS = 0, METRO, BIKE }
 
 @export
 var line_width := 10.0
@@ -134,6 +134,19 @@ func get_line_path() -> PackedVector2Array:
 
 func _draw() -> void:
 	var points := get_line_path()
+
+	var offset := line_type - 1
+	for i in points.size():
+		var cross_direction : Vector2
+		if i == 0:
+			cross_direction = points[0].direction_to(points[1]).orthogonal().normalized()
+		elif i == points.size() - 1:
+			cross_direction = points[-2].direction_to(points[-1]).orthogonal().normalized()
+		else:
+			cross_direction = points[i - 1].direction_to(points[i + 1]).orthogonal().normalized()
+
+		points[i] += cross_direction * offset * line_width
+
 	for i in points.size():
 		points[i] = to_local(points[i])
 
