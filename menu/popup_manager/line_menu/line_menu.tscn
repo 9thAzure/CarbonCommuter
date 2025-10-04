@@ -13,6 +13,9 @@ offset_top = 4.0
 offset_right = 96.0
 offset_bottom = 96.0
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="DestroyButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Destroy"
+
+[connection signal="about_to_popup" from="." to="." method="_on_about_to_popup"]
+[connection signal="pressed" from="VBoxContainer/DestroyButton" to="." method="_on_destroy_button_pressed"]

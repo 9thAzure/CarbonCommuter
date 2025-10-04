@@ -20,3 +20,6 @@ visible = false
 [node name="LineMenu" parent="." instance=ExtResource("3_8evng")]
 unique_name_in_owner = true
 visible = false
+
+[connection signal="create_line" from="StationMenu" to="." method="_on_station_menu_create_line"]
+[connection signal="destroy_line" from="LineMenu" to="." method="_on_line_menu_destroy_line"]

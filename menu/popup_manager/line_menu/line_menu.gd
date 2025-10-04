@@ -1,6 +1,7 @@
 extends PopupPanel
 
 var current_line : Line = null
+signal destroy_line(line: Line)
 
 func popup_line(line: Line) -> void:
 	assert(line)
@@ -10,3 +11,6 @@ func popup_line(line: Line) -> void:
 
 func _on_about_to_popup() -> void:
 	assert(current_line)
+
+func _on_destroy_button_pressed() -> void:
+	destroy_line.emit(current_line)
