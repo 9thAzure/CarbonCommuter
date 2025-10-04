@@ -6,11 +6,12 @@
 [ext_resource type="PackedScene" uid="uid://dcqldbx31pi3v" path="res://menu/line_creator/line_creator.tscn" id="3_c651c"]
 [ext_resource type="PackedScene" uid="uid://cajxacx1bc4xe" path="res://passengers/passenger.tscn" id="3_kfbq2"]
 [ext_resource type="PackedScene" uid="uid://7hbacueo444g" path="res://menu/popup_manager/popup_manager.tscn" id="3_xwkvk"]
-[ext_resource type="PackedScene" uid="uid://cnamwlnifx04k" path="res://utility/picker/EmissionsHud.tscn" id="6_kfbq2"]
+[ext_resource type="PackedScene" uid="uid://cnamwlnifx04k" path="res://menu/hud/EmissionsHud.tscn" id="6_kfbq2"]
 
-[node name="Main" type="Node"]
+[node name="Main" type="Node" node_paths=PackedStringArray("hud")]
 script = ExtResource("1_3wy1v")
 station_scene = ExtResource("1_53q0u")
+hud = NodePath("Test")
 passenger_scene = ExtResource("3_kfbq2")
 
 [node name="Station" parent="." instance=ExtResource("1_53q0u")]
@@ -48,20 +49,18 @@ station2 = NodePath("../Station3")
 
 [node name="PopupManager" parent="." instance=ExtResource("3_xwkvk")]
 
-[node name="LineCreator" parent="." node_paths=PackedStringArray("line_root") instance=ExtResource("3_c651c")]
+[node name="LineCreator" parent="." node_paths=PackedStringArray("hud", "line_root") instance=ExtResource("3_c651c")]
+hud = NodePath("../Test")
 line_root = NodePath("..")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 60.0
 autostart = true
 
-<<<<<<< HEAD
 [node name="PassengerCreationTimer" type="Timer" parent="."]
 wait_time = 1.1609999999999998
 autostart = true
-=======
 [node name="Test" parent="." instance=ExtResource("6_kfbq2")]
->>>>>>> 620b57af195d9451f21a06c558a0b410890b9951
 
 [connection signal="create_line" from="PopupManager" to="LineCreator" method="_on_popup_manager_create_line"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

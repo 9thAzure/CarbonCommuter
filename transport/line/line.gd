@@ -34,6 +34,8 @@ var passengers_in_transit := []  # Array of {destination: Station, travel_time: 
 var emission_factor := 0
 var carbon_cost := 0
 var travel_speed := 0
+static var list_of_lines : Array[Line] = []
+
 
 const MODE_PROPERTIES := {
 	LineType.BUS: {
@@ -69,6 +71,7 @@ func _ready() -> void:
 	station1.connected_lines.push_back(self)
 	station2.connected_lines.push_back(self)
 	queue_redraw()
+	list_of_lines.push_back(self)
 
 	if line_type == LineType.BIKE:
 		vehicles_on_line = 35
@@ -129,6 +132,7 @@ func calculate_emissions() -> float:
 func _exit_tree() -> void:
 	station1.connected_lines.remove_at(station1.connected_lines.find(self))
 	station2.connected_lines.remove_at(station2.connected_lines.find(self))
+	list_of_lines.remove_at(list_of_lines.find(self))
 
 ## Returns an array representing the path between the 2 stations, in global coordinates
 func get_line_path() -> PackedVector2Array:

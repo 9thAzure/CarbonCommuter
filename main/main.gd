@@ -1,5 +1,7 @@
 extends Node
 
+@export var hud: CanvasLayer = null
+
 @export var station_scene: PackedScene
 @export var passenger_scene: PackedScene
 @export var min_distance_between_stations: float = 60.0
@@ -20,7 +22,8 @@ func _ready():
 	var starting_stations: Array[Station] = [station, station_2, station_3, station_4, station_5, station_6, station_7]
 	Station.stations.append_array(starting_stations)
 	print(Station.stations[0])
-	
+
+
 	# Collision checking to preventn overlapping spawn
 	shape_cast = ShapeCast2D.new()
 	add_child(shape_cast)
@@ -90,3 +93,14 @@ func spawn_passenger():
 
 func _on_passenger_creation_timer_timeout() -> void:
 	spawn_passenger()
+
+func _process(_delta: float) -> void:
+	# Calculate total emissions from all lines
+	var total_emissions = 0.0
+	for l in Line.list_of_lines:
+		total_emissions += l.calculate_emissions()
+	
+	if hud:
+		hud.current_emissions = total_emissions
+		
+		
