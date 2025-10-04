@@ -13,6 +13,6 @@ func _on_about_to_popup() -> void:
 	assert(current_station)
 	
 
-
 func _on_create_line_button_pressed() -> void:
 	create_line.emit(current_station)
+	hide()

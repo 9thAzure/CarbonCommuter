@@ -14,3 +14,4 @@ func _on_about_to_popup() -> void:
 
 func _on_destroy_button_pressed() -> void:
 	destroy_line.emit(current_line)
+	hide()

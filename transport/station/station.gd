@@ -12,6 +12,8 @@ var station_type := 0
 
 var connected_lines : Array[Line] = []
 
+var station_traffic := 0
+
 func _draw() -> void:
 	var collision_shape : Shape2D
 	if station_type == 0:
@@ -36,3 +38,25 @@ func create_regular(vertices_count: int, size: float) -> PackedVector2Array:
 		points[i] = Vector2.UP.rotated(arc_angle * i) * size
 
 	return points
+
+func send_passenger():
+	if station_traffic <= 0:
+		return
+	if connected_lines.is_empty():
+		return
+	var random_line = connected_lines.pick_random()
+	var destination = random_line.station1 if random_line.station2 == self else random_line.station2
+	station_traffic -= 1
+	random_line.add_passenger(destination)
+
+func _on_spawn_traffic_timer_timeout() -> void:
+	var temp1 := randf() * 3 + 2
+	var temp2 := randf() + 0.5
+	%"SpawnTrafficTimer".wait_time = temp1
+	station_traffic += 1
+	%"SpawnTrafficTimer".wait_time = temp2
+	send_passenger()
+
+func arrive_passenger() -> void:
+	# Passenger has arrived and despawns
+	pass

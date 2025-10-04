@@ -18,12 +18,45 @@ var line_color := Color.WHITE
 
 var distance := -1.0
 
+@export var emission_factor := 1.0
+var traffic := 0.0
+var passengers_in_transit := []  # Array of {destination: Station, travel_time: float}
+@export var travel_speed := 50.0  # Units per second
+
 func _ready() -> void:
 	assert(station1)
 	assert(station2)
 
 	station1.connected_lines.push_back(self)
 	station2.connected_lines.push_back(self)
+
+func add_passenger(destination: Station) -> void:
+	assert(distance > 0)
+
+	var travel_time = distance / travel_speed
+	passengers_in_transit.append({
+		"destination": destination,
+		"time_remaining": travel_time
+	})
+	traffic = passengers_in_transit.size()
+	
+func _process(delta: float) -> void:
+	# Update all passengers traveling on this line
+	for i in range(passengers_in_transit.size() - 1, -1, -1):
+		passengers_in_transit[i].time_remaining -= delta
+		
+		if passengers_in_transit[i].time_remaining <= 0:
+			# Passenger arrived!
+			var destination = passengers_in_transit[i].destination
+			destination.arrive_passenger()
+			passengers_in_transit.remove_at(i)
+	
+	traffic = passengers_in_transit.size()
+
+func calculate_emissions() -> float:
+	assert(distance > 0)
+	
+	return distance * traffic * emission_factor
 
 func _exit_tree() -> void:
 	station1.connected_lines.remove_at(station1.connected_lines.find(self))

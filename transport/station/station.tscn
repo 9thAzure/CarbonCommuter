@@ -12,3 +12,10 @@ script = ExtResource("1_06ycu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_06ycu")
+
+[node name="SpawnTrafficTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="SpawnTrafficTimer" to="." method="_on_spawn_traffic_timer_timeout"]
