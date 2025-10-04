@@ -30,7 +30,7 @@ var emission_factor := 0
 var carbon_cost := 0
 var travel_speed := 0
 
-const MODE_PROPERTIES = {
+const MODE_PROPERTIES := {
 	LineType.BUS: {
 		"emission_multiplier": 1.0,
 		"cost_multiplier": 1.0,
@@ -54,15 +54,24 @@ const MODE_PROPERTIES = {
 func _ready() -> void:
 	assert(station1)
 	assert(station2)
+
+	set_distance()
 	apply_line_mode()
 
 	station1.connected_lines.push_back(self)
 	station2.connected_lines.push_back(self)
+	queue_redraw()
 
 func get_other_station(this: Station) -> Station:
 	assert(this in [station1, station2])
 
 	return station1 if station2 == this else station2
+
+func set_distance() -> void:
+	distance = 0
+	var path := get_line_path()
+	for i in path.size() - 1:
+		distance += path[i].distance_to(path[i + 1])
 
 func apply_line_mode() -> void:
 	var props = MODE_PROPERTIES[line_type]
@@ -73,7 +82,6 @@ func apply_line_mode() -> void:
 
 	# Set color based on mode
 	line_color = props.color
-	assert(distance > 0)
 	# Calculate construction cost (will be accurate after _draw calculates distance)
 	carbon_cost = distance * base_carbon_cost * props.cost_multiplier
 
@@ -126,16 +134,8 @@ func get_line_path() -> PackedVector2Array:
 
 func _draw() -> void:
 	var points := get_line_path()
-
-	distance = 0
-	for i in points.size() - 1:
-		distance += points[i].distance_to(points[i + 1])
+	for i in points.size():
 		points[i] = to_local(points[i])
-	points[-1] = to_local(points[-1])
-
-	if carbon_cost == 0.0:  # Only calculate once
-		var props = MODE_PROPERTIES[line_type]
-		carbon_cost = distance * base_carbon_cost * props.cost_multiplier
 
 	draw_polyline(points, line_color, line_width)
 	var collision_shape := ConcavePolygonShape2D.new()

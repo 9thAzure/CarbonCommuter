@@ -48,6 +48,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		var line: Line = line_scene.instantiate()
 		line.station1 = station1
 		line.station2 = station
+		line.line_type = line_type_selector.get_selected_items()[0]
 		
 		assert(line_root)
 		line_root.add_child(line)
