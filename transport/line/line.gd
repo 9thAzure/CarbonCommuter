@@ -127,8 +127,8 @@ func get_line_path() -> PackedVector2Array:
 		position2 = t
 
 	var difference := position2 - position1
-	var middle := difference.sign() * difference.abs()[difference.abs().min_axis_index()]
-	var points := PackedVector2Array([position1, position1 + middle, position2])
+	var middle := difference.sign() * difference.abs()[difference.abs().min_axis_index()] / 2
+	var points := PackedVector2Array([position1, position1 + middle, position2 - middle, position2])
 	return points
 
 
@@ -145,7 +145,7 @@ func _draw() -> void:
 		else:
 			cross_direction = points[i - 1].direction_to(points[i + 1]).orthogonal().normalized()
 
-		points[i] += cross_direction * offset * line_width
+		points[i] += cross_direction * offset * line_width * 1.5
 
 	for i in points.size():
 		points[i] = to_local(points[i])
