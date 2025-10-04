@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cajxacx1bc4xe"]
+
+[ext_resource type="Script" uid="uid://dwwfjb17iut0u" path="res://passengers/passenger.gd" id="1_1b4v4"]
+
+[node name="Passenger" type="Area2D"]
+script = ExtResource("1_1b4v4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]

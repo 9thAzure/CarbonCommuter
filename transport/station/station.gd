@@ -10,6 +10,8 @@ var icon_color := Color.WHITE
 @export_range(0, 10, 1, "or_greater")
 var station_type := 0
 
+static var stations : Array[Station] = []
+
 var connected_lines : Array[Line] = []
 
 var station_traffic := 0
@@ -53,10 +55,13 @@ func _on_spawn_traffic_timer_timeout() -> void:
 	var next_time := randf() * 3 + 2
 	%"SpawnTrafficTimer".wait_time = next_time
 	var wait_time := randf() + 0.5
-	station_traffic += 1
 	await get_tree().create_timer(wait_time).timeout
 	send_passenger()
 
 func arrive_passenger() -> void:
 	# Passenger has arrived and despawns
 	pass
+
+func add_traffic() -> void:
+	station_traffic += 1
+	print("Station Traffic" + str(station_traffic))
