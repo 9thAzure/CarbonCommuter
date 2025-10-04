@@ -38,9 +38,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 		if station == station1:
 			return
-		
+
+		var line_type := line_type_selector.get_selected_items()[0] as int
 		for line in station1.connected_lines:
-			if line.get_other_station(station1) == station:
+			if line.get_other_station(station1) == station and line.line_type == line_type:
 				return
 		
 		# create line
@@ -48,7 +49,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		var line: Line = line_scene.instantiate()
 		line.station1 = station1
 		line.station2 = station
-		line.line_type = line_type_selector.get_selected_items()[0]
+		line.line_type = line_type as Line.LineType
 		
 		assert(line_root)
 		line_root.add_child(line)
