@@ -153,8 +153,16 @@ func _draw() -> void:
 		points[i] = to_local(points[i])
 
 	draw_polyline(points, line_color, line_width)
+
 	var collision_shape := ConcavePolygonShape2D.new()
-	points.insert(1, points[1])
+	var original_size := points.size()
+	points.resize(points.size() * 2 - 2)
+	for i in original_size - 1:
+		var index := -1 - 2 * i
+		points[index] = points[original_size - 1 - i]
+		points[index - 1] = points[original_size - 2 - i]
+	print(points)
+	#points.insert(1, points[1])
 	collision_shape.segments = points
 	get_node("CollisionShape2D").shape = collision_shape
 
