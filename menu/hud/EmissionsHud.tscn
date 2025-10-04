@@ -2,5 +2,23 @@
 
 [ext_resource type="Script" uid="uid://e3kk0m5h1nrw" path="res://menu/hud/label.gd" id="1_x31b5"]
 
-[node name="Test" type="CanvasLayer"]
+[node name="EmissionsHud" type="CanvasLayer"]
 script = ExtResource("1_x31b5")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 310.0
+offset_bottom = 130.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="EmissionLabel" type="Label" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="BudgetLabel" type="Label" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
