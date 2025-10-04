@@ -19,7 +19,3 @@ func get_object_at(at_position: Vector2) -> Area2D:
 			
 	return first_line as Area2D
 	
-func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		print(get_object_at(event.position))
-	

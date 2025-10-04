@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://7hbacueo444g"]
+
+[ext_resource type="Script" uid="uid://bvxo8w8bxu434" path="res://menu/popup_manager/popup_manager.gd" id="1_fex28"]
+[ext_resource type="PackedScene" uid="uid://do5hvv3qm5xhh" path="res://menu/popup_manager/station_menu/station_menu.tscn" id="2_15hce"]
+[ext_resource type="PackedScene" uid="uid://d3c8iji7ox7xe" path="res://menu/popup_manager/line_menu/line_menu.tscn" id="3_8evng"]
+
+[node name="PopupManager" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fex28")
+
+[node name="StationMenu" parent="." instance=ExtResource("2_15hce")]
+unique_name_in_owner = true
+visible = false
+
+[node name="LineMenu" parent="." instance=ExtResource("3_8evng")]
+unique_name_in_owner = true
+visible = false

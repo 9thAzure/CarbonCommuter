@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3c8iji7ox7xe"]
+
+[ext_resource type="Script" uid="uid://cl2c1evi1gy3b" path="res://menu/popup_manager/line_menu/line_menu.gd" id="1_cvajg"]
+
+[node name="LineMenu" type="PopupPanel"]
+oversampling_override = 1.0
+visible = true
+script = ExtResource("1_cvajg")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 96.0
+offset_bottom = 96.0
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Destroy"

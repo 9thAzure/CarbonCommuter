@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://do5hvv3qm5xhh"]
+
+[ext_resource type="Script" uid="uid://cr7llsiqvr0fn" path="res://menu/popup_manager/station_menu/station_menu.gd" id="1_06ny2"]
+
+[node name="StationMenu" type="PopupPanel"]
+oversampling_override = 1.0
+size = Vector2i(127, 100)
+visible = true
+script = ExtResource("1_06ny2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 123.0
+offset_bottom = 96.0
+
+[node name="CreateLineButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Create Line To"
+
+[connection signal="about_to_popup" from="." to="." method="_on_about_to_popup"]
+[connection signal="pressed" from="VBoxContainer/CreateLineButton" to="." method="_on_create_line_button_pressed"]

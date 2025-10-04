@@ -1,4 +1,4 @@
-extends Node2D
+extends Area2D
 class_name Station
 
 @export_range(0.1, 10, 0.1, "or_greater")
