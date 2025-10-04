@@ -16,8 +16,6 @@ var shape_cast: ShapeCast2D
 @onready var station_6: Station = $Station6
 @onready var station_7: Station = $Station7
 
-
-
 func _ready():
 	var starting_stations: Array[Station] = [station, station_2, station_3, station_4, station_5, station_6, station_7]
 	Station.stations.append_array(starting_stations)
