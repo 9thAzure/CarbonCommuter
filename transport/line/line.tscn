@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6qffreg11fit"]
+
+[ext_resource type="Script" uid="uid://bs3pp0qsm5l6s" path="res://transport/line/line.gd" id="1_vygk5"]
+
+[node name="Line" type="Node2D"]
+z_index = -10
+script = ExtResource("1_vygk5")
+line_color = Color(0, 1, 0, 0.52156866)
