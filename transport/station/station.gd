@@ -50,11 +50,11 @@ func send_passenger():
 	random_line.add_passenger(destination)
 
 func _on_spawn_traffic_timer_timeout() -> void:
-	var temp1 := randf() * 3 + 2
-	var temp2 := randf() + 0.5
-	%"SpawnTrafficTimer".wait_time = temp1
+	var next_time := randf() * 3 + 2
+	%"SpawnTrafficTimer".wait_time = next_time
+	var wait_time := randf() + 0.5
 	station_traffic += 1
-	%"SpawnTrafficTimer".wait_time = temp2
+	await get_tree().create_timer(wait_time).timeout
 	send_passenger()
 
 func arrive_passenger() -> void:

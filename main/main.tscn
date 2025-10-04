@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://uyxbuxwhflhv"]
+[gd_scene load_steps=5 format=3 uid="uid://uyxbuxwhflhv"]
 
 [ext_resource type="PackedScene" uid="uid://b0bpoejkkx6vl" path="res://transport/station/station.tscn" id="1_53q0u"]
 [ext_resource type="PackedScene" uid="uid://b6qffreg11fit" path="res://transport/line/line.tscn" id="2_pjrb6"]
+[ext_resource type="PackedScene" uid="uid://dcqldbx31pi3v" path="res://menu/line_creator/line_creator.tscn" id="3_c651c"]
 [ext_resource type="PackedScene" uid="uid://7hbacueo444g" path="res://menu/popup_manager/popup_manager.tscn" id="3_xwkvk"]
 
 [node name="Main" type="Node"]
@@ -10,7 +11,7 @@
 position = Vector2(90, 54)
 
 [node name="Station2" parent="." instance=ExtResource("1_53q0u")]
-position = Vector2(474, 135)
+position = Vector2(534, 199)
 station_type = 1
 
 [node name="Station3" parent="." instance=ExtResource("1_53q0u")]
@@ -25,4 +26,13 @@ station2 = NodePath("../Station2")
 station1 = NodePath("../Station")
 station2 = NodePath("../Station3")
 
+[node name="Line3" parent="." node_paths=PackedStringArray("station1", "station2") instance=ExtResource("2_pjrb6")]
+station1 = NodePath("../Station2")
+station2 = NodePath("../Station3")
+
 [node name="PopupManager" parent="." instance=ExtResource("3_xwkvk")]
+
+[node name="LineCreator" parent="." node_paths=PackedStringArray("line_root") instance=ExtResource("3_c651c")]
+line_root = NodePath("..")
+
+[connection signal="create_line" from="PopupManager" to="LineCreator" method="_on_popup_manager_create_line"]

@@ -59,13 +59,18 @@ func _ready() -> void:
 	station1.connected_lines.push_back(self)
 	station2.connected_lines.push_back(self)
 
+func get_other_station(this: Station) -> Station:
+	assert(this in [station1, station2])
+
+	return station1 if station2 == this else station2
+
 func apply_line_mode() -> void:
 	var props = MODE_PROPERTIES[line_type]
-	
+
 	# Apply multipliers
 	emission_factor = base_emission_factor * props.emission_multiplier
 	travel_speed = base_travel_speed * props.speed_multiplier
-	
+
 	# Set color based on mode
 	line_color = props.color
 	assert(distance > 0)
@@ -108,14 +113,13 @@ func _exit_tree() -> void:
 func get_line_path() -> PackedVector2Array:
 	var position1 := station1.global_position
 	var position2 := station2.global_position
-	if position2.length_squared() < position2.length_squared():
+	if position2.length_squared() < position1.length_squared():
 		var t := position1
 		position1 = position2
 		position2 = t
 
 	var difference := position2 - position1
-	var middle := difference.sign() * difference[difference.min_axis_index()]
-
+	var middle := difference.sign() * difference.abs()[difference.abs().min_axis_index()]
 	var points := PackedVector2Array([position1, position1 + middle, position2])
 	return points
 
@@ -128,7 +132,7 @@ func _draw() -> void:
 		distance += points[i].distance_to(points[i + 1])
 		points[i] = to_local(points[i])
 	points[-1] = to_local(points[-1])
-	
+
 	if carbon_cost == 0.0:  # Only calculate once
 		var props = MODE_PROPERTIES[line_type]
 		carbon_cost = distance * base_carbon_cost * props.cost_multiplier
