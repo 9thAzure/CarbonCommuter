@@ -13,7 +13,6 @@ script = ExtResource("1_3wy1v")
 hud = NodePath("Test")
 station_scene = ExtResource("1_53q0u")
 passenger_scene = ExtResource("3_kfbq2")
-hud = NodePath("Test")
 
 [node name="Station" parent="." instance=ExtResource("1_53q0u")]
 position = Vector2(90, 54)

@@ -18,8 +18,6 @@ var shape_cast: ShapeCast2D
 @onready var station_6: Station = $Station6
 @onready var station_7: Station = $Station7
 
-
-
 func _ready():
 	var starting_stations: Array[Station] = [station, station_2, station_3, station_4, station_5, station_6, station_7]
 	Station.stations.append_array(starting_stations)
@@ -100,10 +98,13 @@ func _on_passenger_creation_timer_timeout() -> void:
 func _process(_delta: float) -> void:
 	# Calculate total emissions from all lines
 	var total_emissions = 0.0
+	var total_cost := 1000.0
 	for l in Line.list_of_lines:
 		total_emissions += l.calculate_emissions()
+		total_cost -= l.calculate_carbon_cost()
 	
 	if hud:
 		hud.current_emissions = total_emissions
+		hud.carbon_budget = total_cost
 		
 		

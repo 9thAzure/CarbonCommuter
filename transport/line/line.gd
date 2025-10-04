@@ -29,7 +29,7 @@ var vehicles_on_line := 1
 var traffic := 0.0
 var passengers_in_transit := []  # Array of {destination: Station, travel_time: float}
 @export var base_travel_speed := 50.0  # Units per second
-@export var base_carbon_cost := 10.0
+@export var base_carbon_cost := 0.15
 
 var emission_factor := 0
 var carbon_cost := 0
@@ -129,6 +129,10 @@ func calculate_emissions() -> float:
 	
 	return distance * traffic * emission_factor
 
+func calculate_carbon_cost() -> float:
+	assert(distance > 0)
+	return carbon_cost
+
 func _exit_tree() -> void:
 	station1.connected_lines.remove_at(station1.connected_lines.find(self))
 	station2.connected_lines.remove_at(station2.connected_lines.find(self))
@@ -184,6 +188,3 @@ func _draw() -> void:
 	#points.insert(1, points[1])
 	collision_shape.segments = points
 	get_node("CollisionShape2D").shape = collision_shape
-
-func get_construction_cost() -> float:
-	return carbon_cost
