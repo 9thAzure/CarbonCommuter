@@ -23,6 +23,8 @@ var line_alpha := 0.5
 
 var distance := -1.0
 
+var vehicles_on_line := 1
+
 @export var base_emission_factor := 1.0
 var traffic := 0.0
 var passengers_in_transit := []  # Array of {destination: Station, travel_time: float}
@@ -38,12 +40,14 @@ const MODE_PROPERTIES := {
 		"emission_multiplier": 1.0,
 		"cost_multiplier": 1.0,
 		"speed_multiplier": 1.0,
+		"max_vehicles" : 15,
 		"color": Color.RED
 	},
 	LineType.METRO: {
 		"emission_multiplier": 0.5,  # Metro is cleaner
 		"cost_multiplier": 3.0,      # But expensive to build
 		"speed_multiplier": 2.0,     # And faster
+		"max_vehicles": 5,
 		"color": Color.BLUE
 	},
 	LineType.BIKE: {
@@ -65,6 +69,9 @@ func _ready() -> void:
 	station1.connected_lines.push_back(self)
 	station2.connected_lines.push_back(self)
 	queue_redraw()
+
+	if line_type == LineType.BIKE:
+		vehicles_on_line = 35
 
 func get_other_station(this: Station) -> Station:
 	assert(this in [station1, station2])
