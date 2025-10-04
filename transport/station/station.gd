@@ -18,7 +18,9 @@ var connected_lines : Array[Line] = []
 
 var station_traffic := 0
 	
-	
+func _ready() -> void:
+	TransportGrid.grid.add_station(self)
+
 func _draw() -> void:
 	var collision_shape : Shape2D
 	if station_type == 0:

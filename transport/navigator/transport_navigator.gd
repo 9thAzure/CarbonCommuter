@@ -30,7 +30,7 @@ func add_station(station: Station) -> void:
 	for i in line_types:
 		for i2 in line_types - i - 1:
 			i2 += i + 1
-			connect_points(id + i, id + i + i2, true)
+			connect_points(id + i, id + i2, true)
 
 	station_ids.set(station, id)
 
