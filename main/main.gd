@@ -31,6 +31,7 @@ func _ready():
 	var circle_shape = CircleShape2D.new()
 	circle_shape.radius = min_distance_between_stations
 	shape_cast.shape = circle_shape
+	shape_cast.target_position = Vector2.ZERO
 	
 	shape_cast.enabled = true
 	shape_cast.collide_with_areas = true
