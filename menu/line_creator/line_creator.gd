@@ -1,5 +1,5 @@
 extends Node
-
+@export var hud: CanvasLayer = null
 const line_scene := preload("res://transport/line/line.tscn")
 
 @export
