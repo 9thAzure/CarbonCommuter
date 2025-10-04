@@ -13,11 +13,19 @@ var station_type := 0
 var connected_lines : Array[Line] = []
 
 func _draw() -> void:
+	var collision_shape : Shape2D
 	if station_type == 0:
 		draw_circle(Vector2.ZERO, icon_size, icon_color)
+		collision_shape = CircleShape2D.new()
+		collision_shape.radius = icon_size
+		get_node("CollisionShape2D").shape = collision_shape
 		return
 
-	draw_colored_polygon(create_regular(station_type + 2, icon_size * 1.2), icon_color)
+	var shape := create_regular(station_type + 2, icon_size * 1.2)
+	draw_colored_polygon(shape, icon_color)
+	collision_shape = ConvexPolygonShape2D.new()
+	collision_shape.points = shape
+	get_node("CollisionShape2D").shape = collision_shape
 
 func create_regular(vertices_count: int, size: float) -> PackedVector2Array:
 	assert(vertices_count >= 3)

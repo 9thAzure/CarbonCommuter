@@ -15,6 +15,14 @@ run/main_scene="uid://uyxbuxwhflhv"
 config/features=PackedStringArray("4.5", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Picker="*res://utility/picker/picker.tscn"
+
+[layer_names]
+
+2d_physics/layer_16="Pickable"
+
 [rendering]
 
 renderer/rendering_method="mobile"

@@ -1,4 +1,4 @@
-extends Node2D
+extends Area2D
 class_name Line
 
 @export
@@ -55,3 +55,7 @@ func _draw() -> void:
 	points[-1] = to_local(points[-1])
 
 	draw_polyline(points, line_color, line_width)
+	var collision_shape := ConcavePolygonShape2D.new()
+	points.insert(1, points[1])
+	collision_shape.segments = points
+	get_node("CollisionShape2D").shape = collision_shape
