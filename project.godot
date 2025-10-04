@@ -19,15 +19,12 @@ config/icon="res://icon.svg"
 
 Picker="*res://utility/picker/picker.tscn"
 
-<<<<<<< HEAD
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
-=======
 [display]
 
 window/stretch/mode="canvas_items"
->>>>>>> 620b57af195d9451f21a06c558a0b410890b9951
 
 [layer_names]
 
