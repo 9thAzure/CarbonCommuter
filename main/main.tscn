@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://uyxbuxwhflhv"]
+[gd_scene load_steps=7 format=3 uid="uid://uyxbuxwhflhv"]
 
 [ext_resource type="Script" uid="uid://c1ed4io4y5vd5" path="res://main/main.gd" id="1_3wy1v"]
 [ext_resource type="PackedScene" uid="uid://b0bpoejkkx6vl" path="res://transport/station/station.tscn" id="1_53q0u"]
 [ext_resource type="PackedScene" uid="uid://b6qffreg11fit" path="res://transport/line/line.tscn" id="2_pjrb6"]
 [ext_resource type="PackedScene" uid="uid://dcqldbx31pi3v" path="res://menu/line_creator/line_creator.tscn" id="3_c651c"]
 [ext_resource type="PackedScene" uid="uid://7hbacueo444g" path="res://menu/popup_manager/popup_manager.tscn" id="3_xwkvk"]
+[ext_resource type="PackedScene" uid="uid://cnamwlnifx04k" path="res://utility/picker/EmissionsHud.tscn" id="6_kfbq2"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_3wy1v")
@@ -57,6 +58,8 @@ line_root = NodePath("..")
 [node name="Timer" type="Timer" parent="."]
 wait_time = 5.0
 autostart = true
+
+[node name="Test" parent="." instance=ExtResource("6_kfbq2")]
 
 [connection signal="create_line" from="PopupManager" to="LineCreator" method="_on_popup_manager_create_line"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
