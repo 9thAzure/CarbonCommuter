@@ -25,6 +25,7 @@ window/stretch/mode="canvas_items"
 
 [layer_names]
 
+2d_physics/layer_15="Station"
 2d_physics/layer_16="Pickable"
 
 [rendering]

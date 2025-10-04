@@ -15,27 +15,21 @@ position = Vector2(90, 54)
 
 [node name="Station2" parent="." instance=ExtResource("1_53q0u")]
 position = Vector2(534, 199)
-station_type = 1
 
 [node name="Station3" parent="." instance=ExtResource("1_53q0u")]
 position = Vector2(244, 302)
-station_type = 2
 
 [node name="Station4" parent="." instance=ExtResource("1_53q0u")]
 position = Vector2(135, 400)
-station_type = 2
 
 [node name="Station5" parent="." instance=ExtResource("1_53q0u")]
 position = Vector2(520, 481)
-station_type = 2
 
 [node name="Station6" parent="." instance=ExtResource("1_53q0u")]
 position = Vector2(433, 100)
-station_type = 2
 
 [node name="Station7" parent="." instance=ExtResource("1_53q0u")]
 position = Vector2(768, 313)
-station_type = 2
 
 [node name="Line" parent="." node_paths=PackedStringArray("station1", "station2") instance=ExtResource("2_pjrb6")]
 station1 = NodePath("../Station")
@@ -55,7 +49,7 @@ station2 = NodePath("../Station3")
 line_root = NodePath("..")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 60.0
 autostart = true
 
 [connection signal="create_line" from="PopupManager" to="LineCreator" method="_on_popup_manager_create_line"]

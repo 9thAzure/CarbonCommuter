@@ -55,6 +55,7 @@ const MODE_PROPERTIES := {
 }
 
 func _ready() -> void:
+	print(name)
 	assert(station1)
 	assert(station2)
 

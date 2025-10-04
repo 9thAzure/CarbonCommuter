@@ -13,7 +13,8 @@ var station_type := 0
 var connected_lines : Array[Line] = []
 
 var station_traffic := 0
-
+	
+	
 func _draw() -> void:
 	var collision_shape : Shape2D
 	if station_type == 0:
