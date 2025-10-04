@@ -11,7 +11,27 @@ func popup_line(line: Line) -> void:
 
 func _on_about_to_popup() -> void:
 	assert(current_line)
+	
+	%VehicleCountEditorContainer.hide()
+	if current_line.line_type == Line.LineType.BIKE:
+		%VehicleCountEditButton.hide()
+	else:
+		%VehicleCountEditButton.show()
+		%VehicleCountEditButton.text = "Vehicles: " + str(current_line.vehicles_on_line)
+		%VehicleCountEditor.value = current_line.vehicles_on_line
+		%VehicleCountEditor.max_value = Line.MODE_PROPERTIES[current_line.line_type]["max_vehicles"]
+		
 
 func _on_destroy_button_pressed() -> void:
 	destroy_line.emit(current_line)
 	hide()
+
+
+func _on_confirm_pressed() -> void:
+	var new_count := %VehicleCountEditor.value as int
+	%VehicleCountEditButton.text = "Vehicles: " + str(new_count)
+	current_line.vehicles_on_line = new_count
+	# cost?
+
+func _on_cancel_pressed() -> void:
+	%VehicleCountEditor.value = current_line.vehicles_on_line
