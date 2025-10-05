@@ -170,10 +170,7 @@ func _exit_tree() -> void:
 func get_line_path() -> PackedVector2Array:
 	var position1 := station1.global_position
 	var position2 := station2.global_position
-	if position2.length_squared() < position1.length_squared():
-		var t := position1
-		position1 = position2
-		position2 = t
+
 	var difference := position2 - position1
 	var diagonal_change := difference.sign() * difference.abs()[difference.abs().min_axis_index()]
 	var straight_change := position2 - (position1 + difference)

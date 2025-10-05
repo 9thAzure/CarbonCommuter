@@ -4,6 +4,14 @@ class_name Passenger
 @export_range(0.1, 10, 0.1, "or_greater")
 var icon_size := 5.0
 
+@export_range(0.1, 10, 0.1, "or_greater")
+var impatiance_countdown := 20.0
+
+@export_range(0.1, 10, 0.1, "or_greater", "hide_slider")
+var speed := 30
+
+var direction := 1
+
 var passenger_type := -1
 var target_station : Station
 
@@ -33,6 +41,40 @@ func create_regular(vertices_count: int, size: float) -> PackedVector2Array:
 		points[i] = Vector2.UP.rotated(arc_angle * i) * size
 
 	return points
+
+func _process(delta: float) -> void:
+	var time_factor := 1.0
+	if get_parent() is Station:
+		if get_parent().is_overcrowded():
+			time_factor *= 2
+
+		var next_line := get_next_connection()
+		if not next_line:
+			time_factor *= 4
+		elif randf() < 0.01:
+			time_factor = 0.5
+			var path2d := next_line.path_2d
+			assert(path2d is Path2D)
+			reparent(path2d, false)
+			direction = 1 if is_same(next_line.station2, path[0][0]) else -1
+			@warning_ignore("integer_division")
+			progress_ratio = (-direction + 1) / 2
+
+	elif get_parent() is Path2D:
+		progress += delta * speed * get_parent().get_parent().travel_speed * direction
+		time_factor = 0
+
+		if direction == 1 and is_equal_approx(progress_ratio, 1) or direction == -1 and is_equal_approx(progress_ratio, 0):
+			if is_same(path[0][0], target_station):
+				print("arrived at destination")
+				queue_free()
+				return
+
+			reparent(path[0][0], false)
+			path.pop_front()
+
+	impatiance_countdown -= time_factor
+
 
 func get_next_connection() -> Line:
 	if get_parent() is not Station:
@@ -77,5 +119,3 @@ func recalculate_path() -> void:
 
 		var next_station : Station = TransportGrid.grid.station_ids.find_key(station_id)
 		path.push_back([next_station, id % 3])
-
-	print("path: ", path)

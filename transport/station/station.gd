@@ -23,6 +23,8 @@ var station_traffic := 0
 
 var station_max_capacity := 6
 
+func is_overcrowded() -> bool : return waiting_passengers.size() > station_max_capacity
+
 func _ready() -> void:
 	station_type = stations.size()
 	icon_color.h = fmod(icon_color.h + 1.61803 * station_type, 1)
