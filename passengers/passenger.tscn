@@ -6,6 +6,7 @@
 loop = false
 script = ExtResource("1_1b4v4")
 speed = 1
+drive_pollution_rate = 1
 
 [node name="RecalculatePathTimer" type="Timer" parent="."]
 wait_time = 2.0

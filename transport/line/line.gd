@@ -165,6 +165,10 @@ func _exit_tree() -> void:
 	station2.connected_lines.remove_at(station2.connected_lines.find(self))
 	list_of_lines.remove_at(list_of_lines.find(self))
 	TransportGrid.grid.disconnect_stations(station1, station2, line_type)
+	for i in path_2d.get_child_count():
+		var child := path_2d.get_child(i)
+		if child is Passenger:
+			child.drive_away()
 
 ## Returns an array representing the path between the 2 stations, in global coordinates
 func get_line_path() -> PackedVector2Array:

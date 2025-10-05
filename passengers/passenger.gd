@@ -10,6 +10,9 @@ var impatiance_countdown := 20.0
 @export_range(0.1, 10, 0.1, "or_greater", "hide_slider")
 var speed := 30
 
+@export_range(0, 100, 0.01, "or_greater")
+var drive_pollution_rate := 10
+
 var direction := 1
 
 var passenger_type := -1
@@ -73,7 +76,14 @@ func _process(delta: float) -> void:
 			reparent(path[0][0], false)
 			path.pop_front()
 
-	impatiance_countdown -= time_factor
+	impatiance_countdown -= time_factor * delta
+	if impatiance_countdown <= 0:
+		drive_away()
+
+func drive_away() -> void:
+	var distance := global_position.distance_to(target_station.global_position)
+	print("co2: ", distance * drive_pollution_rate)
+	queue_free()
 
 
 func get_next_connection() -> Line:

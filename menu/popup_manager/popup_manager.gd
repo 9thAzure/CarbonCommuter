@@ -23,6 +23,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _on_line_menu_destroy_line(line: Line) -> void:
+	line.get_parent().remove_child(line)
 	line.queue_free()
 
 
