@@ -86,4 +86,8 @@ func _process(_delta: float) -> void:
 
 
 func _on_game_timer_timeout() -> void:
-	pass
+	get_tree().change_scene_to_file("res://scenes/ui/menus/mainmenu.tscn")
+
+func _exit_tree() -> void:
+	Station.stations.clear()
+	Line.list_of_lines.clear()
