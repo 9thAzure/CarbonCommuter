@@ -79,8 +79,3 @@ func recalculate_path() -> void:
 		path.push_back([next_station, id % 3])
 
 	print("path: ", path)
-#
-#	var point_ids : PackedInt64Array = TransportGrid.grid.get_point_ids()
-#	print(point_ids)
-#	for id in point_ids:
-#		prints("\t", id, "-", TransportGrid.grid.get_point_connections(id))

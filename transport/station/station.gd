@@ -17,6 +17,8 @@ static var stations : Array[Station] = []
 
 var connected_lines : Array[Line] = []
 
+var waiting_passengers : Array[Passenger] = []
+
 var station_traffic := 0
 
 var station_max_capacity := 6
@@ -75,26 +77,16 @@ func arrive_passenger() -> void:
 	# Passenger has arrived and despawns
 	pass
 
-func add_traffic() -> void:
-	station_traffic += 1
-	print("Station Traffic" + str(station_traffic))
-
 func spawn_passenger():
 	var passenger := passenger_scene.instantiate()
-	print(passenger.position.x)
 	passenger.position.x = 30 + 20 * (station_traffic)
 	passenger.position.y = 0
-	print(passenger.position.x)
-	print(position.x)
 
 	passenger.passenger_type = station_type
 	while passenger.passenger_type == station_type:
 		passenger.passenger_type = randi_range(0, stations.size() - 1)
 
 	add_child(passenger)
-	add_traffic()
-	print(passenger.position.x)
-	print(position.x)
 
 
 func _on_overcrowding_timer_timeout() -> void:
@@ -102,3 +94,28 @@ func _on_overcrowding_timer_timeout() -> void:
 	print("Overcrowded!")
 	Stats.add_emissions((station_traffic - station_max_capacity) * Stats.emissions_per_car)
 	station_traffic = station_max_capacity
+
+
+func _on_child_entered_tree(node: Node) -> void:
+	if node is Passenger:
+		var insert_i := waiting_passengers.bsearch_custom(node as Passenger, func(p1: Passenger, p2: Passenger) -> bool:
+			return p1.get_index() <= p2.get_index())
+
+		waiting_passengers.insert(insert_i, node)
+		update_passenger_positions()
+
+func _on_child_exiting_tree(node: Node) -> void:
+	if node is Passenger:
+		waiting_passengers.erase(node)
+		update_passenger_positions()
+
+func update_passenger_positions() -> void:
+	const PASSENGER_SHRINK_THRESHOLD := 4
+	var seperation := 20.0
+	if waiting_passengers.size() > PASSENGER_SHRINK_THRESHOLD:
+		seperation /= waiting_passengers.size() * 1.0 / PASSENGER_SHRINK_THRESHOLD
+	
+	for i in waiting_passengers.size():
+		var passenger := waiting_passengers[i]
+		passenger.position.x = 30 + seperation * i
+		passenger.position.y = 0
