@@ -11,6 +11,9 @@ var icon_color := Color.WHITE
 @export_range(0, 10, 1, "or_greater")
 var station_type := 0
 
+@export
+var passenger_weight := 10.0
+
 static var stations : Array[Station] = []
 
 var connected_lines : Array[Line] = []
@@ -100,6 +103,7 @@ func _on_child_exiting_tree(node: Node) -> void:
 func update_passenger_positions() -> void:
 	const PASSENGER_SHRINK_THRESHOLD := 4
 	var seperation := 20.0
+	TransportGrid.grid.set_station_weight_scale(self, waiting_passengers.size() * passenger_weight)
 	if waiting_passengers.size() > PASSENGER_SHRINK_THRESHOLD:
 		seperation /= waiting_passengers.size() * 1.0 / PASSENGER_SHRINK_THRESHOLD
 	

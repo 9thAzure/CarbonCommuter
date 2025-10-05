@@ -85,7 +85,7 @@ func _ready() -> void:
 	if line_type == LineType.BIKE:
 		vehicles_on_line = 35
 
-	TransportGrid.grid.connect_stations(station1, station2, line_type)
+	TransportGrid.grid.connect_stations(self)
 
 func update_path() -> void:
 	if not path_2d:
@@ -167,7 +167,7 @@ func _exit_tree() -> void:
 	station1.connected_lines.remove_at(station1.connected_lines.find(self))
 	station2.connected_lines.remove_at(station2.connected_lines.find(self))
 	list_of_lines.remove_at(list_of_lines.find(self))
-	TransportGrid.grid.disconnect_stations(station1, station2, line_type)
+	TransportGrid.grid.disconnect_stations(self)
 	for i in path_2d.get_child_count():
 		var child := path_2d.get_child(i)
 		if child is Passenger:
