@@ -73,7 +73,6 @@ func _process(delta: float) -> void:
 
 		if direction == 1 and is_equal_approx(progress_ratio, 1) or direction == -1 and is_equal_approx(progress_ratio, 0):
 			if is_same(path[0][0], target_station):
-				print("arrived at destination")
 				queue_free()
 				return
 

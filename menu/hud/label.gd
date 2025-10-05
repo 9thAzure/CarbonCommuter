@@ -7,7 +7,7 @@ static var max_units := 1000.0
 static var emissions_per_car = 10
 
 @onready var average_emissions_label = %AverageEmissionLabel
-@onready var total_emissions_label = %TotalEmissionstLabel
+@onready var total_emissions_label = %TotalEmissionLabel
 #@onready var budget_bar =
 func _ready() -> void:
 	# Make UI non-blocking

@@ -81,10 +81,8 @@ func _process(_delta: float) -> void:
 		total_cost -= l.calculate_carbon_cost()
 	
 	if hud:
-		hud.current_emissions = total_emissions
-		hud.carbon_units = total_cost
-		hud.carbon_budget = total_cost
-
+		hud.total_carbon_emitted = total_emissions
+		hud.current_average_emissions = total_cost
 
 func _on_game_timer_timeout() -> void:
 	get_tree().change_scene_to_file("res://scenes/ui/menus/mainmenu.tscn")
