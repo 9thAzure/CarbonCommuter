@@ -2,8 +2,6 @@ extends Area2D
 class_name Station
 var passenger_scene := preload("res://passengers/passenger.tscn")
 
-@onready var overcrowding_timer: Timer = $OvercrowdingTimer
-
 @export_range(0.1, 10, 0.1, "or_greater")
 var icon_size := 10.0
 
@@ -69,11 +67,7 @@ func send_passenger():
 func _on_spawn_traffic_timer_timeout() -> void:
 	var next_time := randf() * 10 + 2
 	%"SpawnTrafficTimer".wait_time = next_time
-	var wait_time := randf() * 10 + 2
-	await get_tree().create_timer(wait_time).timeout
 	spawn_passenger()
-	if station_traffic > station_max_capacity:
-		overcrowding_timer.start()
 
 func arrive_passenger() -> void:
 	# Passenger has arrived and despawns
@@ -89,14 +83,6 @@ func spawn_passenger():
 		passenger.passenger_type = randi_range(0, stations.size() - 1)
 
 	add_child(passenger)
-
-
-func _on_overcrowding_timer_timeout() -> void:
-	overcrowding_timer.stop()
-	print("Overcrowded!")
-	Stats.add_current_average_emissions((station_traffic - station_max_capacity) * Stats.emissions_per_car)
-	station_traffic = station_max_capacity
-
 
 func _on_child_entered_tree(node: Node) -> void:
 	if node is Passenger:

@@ -11,7 +11,6 @@ monitoring = false
 script = ExtResource("1_06ycu")
 icon_size = 15.0
 icon_color = Color(1, 0.53999996, 0.53999996, 1)
-station_type = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_06ycu")
@@ -21,10 +20,6 @@ unique_name_in_owner = true
 wait_time = 5.0
 autostart = true
 
-[node name="OvercrowdingTimer" type="Timer" parent="."]
-wait_time = 30.0
-
 [connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
 [connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]
 [connection signal="timeout" from="SpawnTrafficTimer" to="." method="_on_spawn_traffic_timer_timeout"]
-[connection signal="timeout" from="OvercrowdingTimer" to="." method="_on_overcrowding_timer_timeout"]
