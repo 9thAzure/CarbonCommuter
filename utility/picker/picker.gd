@@ -15,7 +15,7 @@ func get_object_at(at_position: Vector2) -> Area2D:
 		if node is Station:
 			return node as Area2D
 		if node is Line and !first_line:
-			first_line = node as Line
+			first_line = node as Line	
 			
 	return first_line as Area2D
 	
