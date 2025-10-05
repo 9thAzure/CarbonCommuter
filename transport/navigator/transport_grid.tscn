@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6ycabit8ougk"]
+
+[ext_resource type="Script" uid="uid://cou85hrwk6nim" path="res://transport/navigator/transport_grid.gd" id="1_r4rud"]
+
+[node name="TransportGrid" type="Node"]
+script = ExtResource("1_r4rud")
