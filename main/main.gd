@@ -83,7 +83,3 @@ func _process(_delta: float) -> void:
 	if hud:
 		hud.current_emissions = total_emissions
 		hud.carbon_budget = total_cost
-
-
-func _on_game_timer_timeout() -> void:
-	pass

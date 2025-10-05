@@ -11,28 +11,34 @@
 script = ExtResource("1_3wy1v")
 hud = NodePath("Test")
 station_scene = ExtResource("1_53q0u")
-passenger_scene = ExtResource("3_kfbq2")
 
 [node name="Station" parent="." instance=ExtResource("1_53q0u")]
 position = Vector2(90, 54)
+icon_color = null
 
 [node name="Station2" parent="." instance=ExtResource("1_53q0u")]
 position = Vector2(534, 199)
+icon_color = null
 
 [node name="Station3" parent="." instance=ExtResource("1_53q0u")]
 position = Vector2(244, 302)
+icon_color = null
 
 [node name="Station4" parent="." instance=ExtResource("1_53q0u")]
 position = Vector2(135, 400)
+icon_color = null
 
 [node name="Station5" parent="." instance=ExtResource("1_53q0u")]
 position = Vector2(520, 481)
+icon_color = null
 
 [node name="Station6" parent="." instance=ExtResource("1_53q0u")]
 position = Vector2(433, 100)
+icon_color = null
 
 [node name="Station7" parent="." instance=ExtResource("1_53q0u")]
 position = Vector2(768, 313)
+icon_color = null
 
 [node name="Line" parent="." node_paths=PackedStringArray("station1", "station2") instance=ExtResource("2_pjrb6")]
 station1 = NodePath("../Station")
