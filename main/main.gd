@@ -82,6 +82,7 @@ func _process(_delta: float) -> void:
 	
 	if hud:
 		hud.current_emissions = total_emissions
+		hud.carbon_units = total_cost
 		hud.carbon_budget = total_cost
 
 

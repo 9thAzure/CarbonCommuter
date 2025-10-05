@@ -7,7 +7,7 @@ var station_ids : Dictionary[Station,int] = {}
 var transfer_cost := 10
 
 func _compute_cost(from_id: int, to_id: int) -> float:
-	if from_id % line_types == to_id % line_types:
+	if from_id % line_types != to_id % line_types:
 		assert(absi(to_id - from_id) <= 3)
 		return transfer_cost
 

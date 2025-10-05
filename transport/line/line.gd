@@ -37,14 +37,9 @@ var carbon_cost := 0
 var travel_speed := 0
 static var list_of_lines : Array[Line] = []
 
-# Pathing
-var path_2d: Path2D
-var path_follow: PathFollow2D
-var is_moving := true
+@onready
+var path_2d: Path2D = $"Path2D"
 
-# Movement Speed
-@export var speed: float = 100.0
-@export var loop: bool = true
 
 const MODE_PROPERTIES := {
 	LineType.BUS: {
@@ -73,11 +68,9 @@ func _ready() -> void:
 	print(name)
 	assert(station1)
 	assert(station2)
-	
-	create_path_nodes()
+
 	update_path()
-	
-	
+
 	set_distance()
 	apply_line_mode()
 
@@ -90,37 +83,7 @@ func _ready() -> void:
 		vehicles_on_line = 35
 
 	TransportGrid.grid.connect_stations(station1, station2, line_type)
-	start_movement()
 
-func start_movement() -> void:
-	is_moving = true
-	if path_follow:
-		path_follow.progress = 0.0  # Reset to start
-
-func stop_movement() -> void:
-	is_moving = false
-
-func pause_movement() -> void:
-	is_moving = false
-
-func resume_movement() -> void:
-	is_moving = true
-	
-func create_path_nodes():
-	path_2d = Path2D.new()
-	add_child(path_2d)
-	
-	path_follow = PathFollow2D.new()
-	path_follow.loop = loop
-	path_follow.rotates = true
-	path_2d.add_child(path_follow)
-	
-	var sprite = Sprite2D.new()
-	sprite.texture = create_circle_texture(10)  # 10px radius circle
-	sprite.position = Vector2.ZERO  # Center it on the path
-	path_follow.add_child(sprite)
-	path_follow.add_child(sprite)
-			
 func update_path() -> void:
 	if not path_2d:
 		return
@@ -176,16 +139,6 @@ func add_passenger(destination: Station) -> void:
 	traffic = passengers_in_transit.size()
 	
 func _process(delta: float) -> void:
-	if not is_moving or not path_follow:
-		return
-		
-	# Move along the path
-	path_follow.progress += speed * delta
-	
-	# Loop back to start if enabled
-	if loop and path_follow.progress_ratio >= 1.0:
-		path_follow.progress = 0.0
-	
 	# Update all passengers traveling on this line
 	for i in range(passengers_in_transit.size() - 1, -1, -1):
 		passengers_in_transit[i].time_remaining -= delta
@@ -212,34 +165,26 @@ func _exit_tree() -> void:
 	station2.connected_lines.remove_at(station2.connected_lines.find(self))
 	list_of_lines.remove_at(list_of_lines.find(self))
 	TransportGrid.grid.disconnect_stations(station1, station2, line_type)
+	for i in path_2d.get_child_count():
+		var child := path_2d.get_child(i)
+		if child is Passenger:
+			child.drive_away()
 
 ## Returns an array representing the path between the 2 stations, in global coordinates
 func get_line_path() -> PackedVector2Array:
 	var position1 := station1.global_position
 	var position2 := station2.global_position
-	if position2.length_squared() < position1.length_squared():
-		var t := position1
-		position1 = position2
-		position2 = t
+
 	var difference := position2 - position1
 	var diagonal_change := difference.sign() * difference.abs()[difference.abs().min_axis_index()]
 	var straight_change := position2 - (position1 + difference)
 	if diagonal_change.length_squared() > straight_change.length_squared():
 		diagonal_change /= 2
 		return PackedVector2Array([position1, position1 + diagonal_change, position2 - diagonal_change, position2])
-	straight_change /= 2
-	return PackedVector2Array([position1, position1 + straight_change, position2 - straight_change, position2])
 
 	straight_change /= 2
 	return PackedVector2Array([position1, position1 + straight_change, position2 - straight_change, position2])
 
-func refresh_path() -> void:
-	update_path()
-
-# Get reference to the follower node if you need to customize it
-func get_follower() -> PathFollow2D:
-	return path_follow
-	
 func _draw() -> void:
 	var points := get_line_path()
 
@@ -271,21 +216,3 @@ func _draw() -> void:
 	#points.insert(1, points[1])
 	collision_shape.segments = points
 	get_node("CollisionShape2D").shape = collision_shape
-	
-# Create a circle texture programmatically
-func create_circle_texture(radius: int, color: Color = Color.WHITE) -> ImageTexture:
-	var size = radius * 2
-	var img = Image.create(size, size, false, Image.FORMAT_RGBA8)
-	
-	# Draw circle
-	for x in size:
-		for y in size:
-			var dx = x - radius
-			var dy = y - radius
-			var distance = sqrt(dx * dx + dy * dy)
-			
-			if distance <= radius:
-				img.set_pixel(x, y, color)
-			else:
-				img.set_pixel(x, y, Color(0, 0, 0, 0))  # Transparent
-	return ImageTexture.create_from_image(img)

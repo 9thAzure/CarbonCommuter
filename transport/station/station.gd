@@ -1,7 +1,6 @@
 extends Area2D
 class_name Station
-
-@onready var overcrowding_timer: Timer = $OvercrowdingTimer
+var passenger_scene := preload("res://passengers/passenger.tscn")
 
 @export_range(0.1, 10, 0.1, "or_greater")
 var icon_size := 10.0
@@ -12,16 +11,18 @@ var icon_color := Color.WHITE
 @export_range(0, 10, 1, "or_greater")
 var station_type := 0
 
-var passenger_scene = preload("res://passengers/passenger.tscn")
-
 static var stations : Array[Station] = []
 
 var connected_lines : Array[Line] = []
 
+var waiting_passengers : Array[Passenger] = []
+
 var station_traffic := 0
 
 var station_max_capacity := 6
-	
+
+func is_overcrowded() -> bool : return waiting_passengers.size() > station_max_capacity
+
 func _ready() -> void:
 	station_type = stations.size()
 	icon_color.h = fmod(icon_color.h + 1.61803 * station_type, 1)
@@ -66,40 +67,43 @@ func send_passenger():
 func _on_spawn_traffic_timer_timeout() -> void:
 	var next_time := randf() * 10 + 2
 	%"SpawnTrafficTimer".wait_time = next_time
-	var wait_time := randf() * 10 + 2
-	await get_tree().create_timer(wait_time).timeout
 	spawn_passenger()
-	if station_traffic > station_max_capacity:
-		overcrowding_timer.start()
 
 func arrive_passenger() -> void:
 	# Passenger has arrived and despawns
 	pass
 
-func add_traffic() -> void:
-	station_traffic += 1
-	print("Station Traffic" + str(station_traffic))
-
 func spawn_passenger():
 	var passenger := passenger_scene.instantiate()
-	print(passenger.position.x)
 	passenger.position.x = 30 + 20 * (station_traffic)
 	passenger.position.y = 0
-	print(passenger.position.x)
-	print(position.x)
 
 	passenger.passenger_type = station_type
 	while passenger.passenger_type == station_type:
 		passenger.passenger_type = randi_range(0, stations.size() - 1)
 
 	add_child(passenger)
-	add_traffic()
-	print(passenger.position.x)
-	print(position.x)
 
+func _on_child_entered_tree(node: Node) -> void:
+	if node is Passenger:
+		var insert_i := waiting_passengers.bsearch_custom(node as Passenger, func(p1: Passenger, p2: Passenger) -> bool:
+			return p1.get_index() <= p2.get_index())
 
-func _on_overcrowding_timer_timeout() -> void:
-	overcrowding_timer.stop()
-	print("Overcrowded!")
-	Stats.add_emissions((station_traffic - station_max_capacity) * Stats.emissions_per_car)
-	station_traffic = station_max_capacity
+		waiting_passengers.insert(insert_i, node)
+		update_passenger_positions()
+
+func _on_child_exiting_tree(node: Node) -> void:
+	if node is Passenger:
+		waiting_passengers.erase(node)
+		update_passenger_positions()
+
+func update_passenger_positions() -> void:
+	const PASSENGER_SHRINK_THRESHOLD := 4
+	var seperation := 20.0
+	if waiting_passengers.size() > PASSENGER_SHRINK_THRESHOLD:
+		seperation /= waiting_passengers.size() * 1.0 / PASSENGER_SHRINK_THRESHOLD
+	
+	for i in waiting_passengers.size():
+		var passenger := waiting_passengers[i]
+		passenger.position.x = 30 + seperation * i
+		passenger.position.y = 0

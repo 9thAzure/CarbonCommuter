@@ -10,12 +10,18 @@ collision_mask = 0
 monitoring = false
 script = ExtResource("1_06ycu")
 icon_size = 15.0
+icon_color = Color(1, 0.53999996, 0.53999996, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_06ycu")
 
 [node name="SpawnTrafficTimer" type="Timer" parent="."]
 unique_name_in_owner = true
 wait_time = 5.0
 autostart = true
 
+[connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
+[connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_06ycu")
 
