@@ -5,7 +5,7 @@ class_name Passenger
 var icon_size := 5.0
 
 @export_range(0.1, 10, 0.1, "or_greater")
-var impatiance_countdown := 20.0
+var impatiance_countdown := 1.0
 
 @export_range(0.1, 10, 0.1, "or_greater", "hide_slider")
 var speed := 30
@@ -24,6 +24,7 @@ var path : Array[Array] = []
 
 func _ready() -> void:
 	target_station = Station.stations[passenger_type]
+	impatiance_countdown *= (global_position.distance_to(target_station.global_position)) ** 1.1
 	recalculate_path()
 
 func _draw() -> void:
@@ -63,9 +64,12 @@ func _process(delta: float) -> void:
 			@warning_ignore("integer_division")
 			progress_ratio = (-direction + 1) / 2
 
+		if randf() < 0.01:
+			recalculate_path()
+
 	elif get_parent() is Path2D:
 		progress += delta * speed * get_parent().get_parent().travel_speed * direction
-		time_factor = 0
+		time_factor = 0.2
 
 		if direction == 1 and is_equal_approx(progress_ratio, 1) or direction == -1 and is_equal_approx(progress_ratio, 0):
 			if is_same(path[0][0], target_station):
