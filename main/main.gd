@@ -6,6 +6,8 @@ extends Node
 @export var min_distance_between_stations: float = 60.0
 @export var max_spawn_attempts: int = 20
 
+@export var initial_spawn_count := 4
+
 @export
 var max_recordings := 10
 var previous_total := 0.0
@@ -27,6 +29,9 @@ func _ready():
 	shape_cast.enabled = true
 	shape_cast.collide_with_areas = true
 	shape_cast.set_collision_mask_value(15, true)  # Only detect station layer
+
+	for i in initial_spawn_count:
+		spawn_station()
 	
 func _on_timer_timeout() -> void:
 	spawn_station()
