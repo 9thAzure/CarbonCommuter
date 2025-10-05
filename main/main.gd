@@ -82,7 +82,7 @@ func get_random_spawn_position() -> Vector2:
 		#hud.current_average_emissions = total_cost
 
 func _on_game_timer_timeout() -> void:
-	get_tree().change_scene_to_file("res://scenes/ui/menus/mainmenu.tscn")
+	get_tree().change_scene_to_file("res://scenes/gameover.tscn")
 
 func _exit_tree() -> void:
 	Station.stations.clear()
@@ -90,7 +90,7 @@ func _exit_tree() -> void:
 
 
 func _on_refresh_stats_timer_timeout() -> void:
-	var total := EmissionTracker.total_emitted
+	var total: float = EmissionTracker.total_emitted
 	hud.total_carbon_emitted = total
 	var rate := (total - previous_total) / 0.5
 	if previous_rates.size() == max_recordings:

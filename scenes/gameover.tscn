@@ -1,0 +1,50 @@
+[gd_scene load_steps=4 format=3 uid="uid://it7wvamknrtw"]
+
+[ext_resource type="Script" uid="uid://bxu1d3errqj7c" path="res://scenes/gameover.gd" id="1_2mkfd"]
+[ext_resource type="Script" uid="uid://cp4ha0wj0th0q" path="res://scenes/canvas_layer.gd" id="2_h8i2o"]
+[ext_resource type="FontFile" uid="uid://ctgaf2gwyca0v" path="res://scenes/ui/fonts/PoiretOne-Regular.ttf" id="3_mt7yr"]
+
+[node name="GameOver" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2mkfd")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("2_h8i2o")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_mt7yr")
+theme_override_font_sizes/font_size = 160
+text = "Game Over"
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 55
+text = "test"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("1_2mkfd")
+
+[node name="Button" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 44
+text = "Press to return to main menu"
+
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Button" to="." method="_on_button_pressed"]

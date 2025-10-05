@@ -24,7 +24,8 @@ autostart = true
 [node name="Test" parent="." instance=ExtResource("6_kfbq2")]
 
 [node name="GameTimer" type="Timer" parent="."]
-wait_time = 300.0
+wait_time = 60.0
+one_shot = true
 autostart = true
 
 [node name="RefreshStatsTimer" type="Timer" parent="."]
