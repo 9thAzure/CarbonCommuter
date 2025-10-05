@@ -75,15 +75,17 @@ func add_traffic() -> void:
 	print("Station Traffic" + str(station_traffic))
 
 func spawn_passenger():
-	var passenger = passenger_scene.instantiate()
+	var passenger := passenger_scene.instantiate()
 	print(passenger.position.x)
 	passenger.position.x = 30 + 20 * (station_traffic)
 	passenger.position.y = 0
 	print(passenger.position.x)
 	print(position.x)
-	passenger.passenger_type = randi_range(0, 2)
-	while (passenger.passenger_type == station_type):
-		passenger.passenger_type = randi_range(0, 2)
+
+	passenger.passenger_type = station_type
+	while passenger.passenger_type == station_type:
+		passenger.passenger_type = randi_range(0, stations.size() - 1)
+
 	add_child(passenger)
 	add_traffic()
 	print(passenger.position.x)
