@@ -3,7 +3,6 @@ extends Node
 @export var hud: CanvasLayer = null
 
 @export var station_scene: PackedScene
-@export var passenger_scene: PackedScene
 @export var min_distance_between_stations: float = 60.0
 @export var max_spawn_attempts: int = 20
 
@@ -84,5 +83,7 @@ func _process(_delta: float) -> void:
 	
 	if hud:
 		hud.current_emissions = total_emissions
-		
-		
+
+
+func _on_game_timer_timeout() -> void:
+	pass

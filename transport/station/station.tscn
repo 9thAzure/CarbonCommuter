@@ -10,6 +10,8 @@ collision_mask = 0
 monitoring = false
 script = ExtResource("1_06ycu")
 icon_size = 15.0
+icon_color = null
+station_type = null
 
 [node name="SpawnTrafficTimer" type="Timer" parent="."]
 unique_name_in_owner = true
