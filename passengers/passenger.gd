@@ -71,6 +71,7 @@ func _process(delta: float) -> void:
 		progress += delta * speed * get_parent().get_parent().travel_speed * direction
 		time_factor = 0.2
 
+		EmissionTracker.total_emitted += get_parent().get_parent().emission_factor * delta
 		if direction == 1 and is_equal_approx(progress_ratio, 1) or direction == -1 and is_equal_approx(progress_ratio, 0):
 			if is_same(path[0][0], target_station):
 				queue_free()
@@ -86,6 +87,7 @@ func _process(delta: float) -> void:
 func drive_away() -> void:
 	var distance := global_position.distance_to(target_station.global_position)
 	print("co2: ", distance * drive_pollution_rate)
+	EmissionTracker.total_emitted += distance * drive_pollution_rate
 	queue_free()
 
 

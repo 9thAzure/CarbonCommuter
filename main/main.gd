@@ -6,23 +6,15 @@ extends Node
 @export var min_distance_between_stations: float = 60.0
 @export var max_spawn_attempts: int = 20
 
+@export
+var max_recordings := 10
+var previous_total := 0.0
+var previous_rates : Array[float] = []
+
+
 var shape_cast: ShapeCast2D
 
-#Adding the stations
-#@onready var station: Station = $Station
-#@onready var station_2: Station = $Station2
-#@onready var station_3: Station = $Station3
-#@onready var station_4: Station = $Station4
-#@onready var station_5: Station = $Station5
-#@onready var station_6: Station = $Station6
-#@onready var station_7: Station = $Station7
-
 func _ready():
-#	var starting_stations: Array[Station] = [station, station_2, station_3, station_4, station_5, station_6, station_7]
-#	Station.stations.append_array(starting_stations)
-	print(Station.stations[0])
-
-
 	# Collision checking to preventn overlapping spawn
 	shape_cast = ShapeCast2D.new()
 	add_child(shape_cast)
@@ -72,17 +64,17 @@ func get_random_spawn_position() -> Vector2:
 	var y = randf_range(0, 648)
 	return Vector2(x, y)
 
-func _process(_delta: float) -> void:
-	# Calculate total emissions from all lines
-	var total_emissions = 0.0
-	var total_cost := 1000.0
-	for l in Line.list_of_lines:
-		total_emissions += l.calculate_emissions()
-		total_cost -= l.calculate_carbon_cost()
-	
-	if hud:
-		hud.total_carbon_emitted = total_emissions
-		hud.current_average_emissions = total_cost
+#func _process(_delta: float) -> void:
+	## Calculate total emissions from all lines
+	#var total_emissions = 0.0
+	#var total_cost := 1000.0
+	#for l in Line.list_of_lines:
+		#total_emissions += l.calculate_emissions()
+		#total_cost -= l.calculate_carbon_cost()
+	#
+	#if hud:
+		#hud.total_carbon_emitted = total_emissions
+		#hud.current_average_emissions = total_cost
 
 func _on_game_timer_timeout() -> void:
 	get_tree().change_scene_to_file("res://scenes/ui/menus/mainmenu.tscn")
@@ -90,3 +82,15 @@ func _on_game_timer_timeout() -> void:
 func _exit_tree() -> void:
 	Station.stations.clear()
 	Line.list_of_lines.clear()
+
+
+func _on_refresh_stats_timer_timeout() -> void:
+	var total := EmissionTracker.total_emitted
+	hud.total_carbon_emitted = total
+	var rate := (total - previous_total) / 0.5
+	if previous_rates.size() == max_recordings:
+		previous_rates.pop_front()
+	previous_rates.push_back(rate)
+
+	hud.current_average_emissions = previous_rates.reduce(func(f1: float, f2:float) -> float: return f1 + f2) / previous_rates.size()
+	previous_total = total

@@ -50,12 +50,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		line.station1 = station1
 		line.station2 = station
 		line.line_type = line_type as Line.LineType
-		if hud:
-			hud.update_units(line.carbon_cost)
-		
+
 		assert(line_root)
 		line_root.add_child(line)
-		
+		if hud:
+			EmissionTracker.total_emitted += line.carbon_cost
+
 		station1 = null
 		
 

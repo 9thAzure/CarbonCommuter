@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Picker="*res://utility/picker/picker.tscn"
 TransportGrid="*res://transport/navigator/transport_grid.tscn"
+EmissionTracker="*res://utility/emission_tracker/emission_tracker.tscn"
 
 [display]
 

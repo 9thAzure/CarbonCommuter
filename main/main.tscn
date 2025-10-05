@@ -62,17 +62,17 @@ line_root = NodePath("..")
 wait_time = 60.0
 autostart = true
 
-[node name="PassengerCreationTimer" type="Timer" parent="."]
-wait_time = 1.1609999999999998
-autostart = true
-
 [node name="Test" parent="." instance=ExtResource("6_kfbq2")]
 
 [node name="GameTimer" type="Timer" parent="."]
 wait_time = 300.0
 autostart = true
 
+[node name="RefreshStatsTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
 [connection signal="create_line" from="PopupManager" to="LineCreator" method="_on_popup_manager_create_line"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-[connection signal="timeout" from="PassengerCreationTimer" to="." method="_on_passenger_creation_timer_timeout"]
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
+[connection signal="timeout" from="RefreshStatsTimer" to="." method="_on_refresh_stats_timer_timeout"]

@@ -35,7 +35,7 @@ func update_display() -> void:
 	average_emissions_label.text = "Current Average Emissions: %.1f CO2/s" % current_average_emissions
 	
 	# Update budget
-	total_emissions_label.text = "Total Carbon Emissions: %.0f / %.0f" % [total_carbon_emitted, max_units]
+	total_emissions_label.text = "Total Carbon Emissions: %.0f" % [total_carbon_emitted]
 
 func set_current_average_emissions(value: float) -> void:
 	current_average_emissions = value

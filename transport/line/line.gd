@@ -177,7 +177,7 @@ func get_line_path() -> PackedVector2Array:
 
 	var difference := position2 - position1
 	var diagonal_change := difference.sign() * difference.abs()[difference.abs().min_axis_index()]
-	var straight_change := position2 - (position1 + difference)
+	var straight_change := position2 - (position1 + diagonal_change)
 	if diagonal_change.length_squared() > straight_change.length_squared():
 		diagonal_change /= 2
 		return PackedVector2Array([position1, position1 + diagonal_change, position2 - diagonal_change, position2])
@@ -212,7 +212,6 @@ func _draw() -> void:
 		var index := -1 - 2 * i
 		points[index] = points[original_size - 1 - i]
 		points[index - 1] = points[original_size - 2 - i]
-	print(points)
-	#points.insert(1, points[1])
+
 	collision_shape.segments = points
 	get_node("CollisionShape2D").shape = collision_shape
