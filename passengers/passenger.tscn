@@ -4,3 +4,7 @@
 
 [node name="Passenger" type="PathFollow2D"]
 script = ExtResource("1_1b4v4")
+
+[node name="RecalculatePathTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true

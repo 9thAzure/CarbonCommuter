@@ -1,5 +1,6 @@
 extends Area2D
 class_name Station
+var passenger_scene := preload("res://passengers/passenger.tscn")
 
 @onready var overcrowding_timer: Timer = $OvercrowdingTimer
 
@@ -12,8 +13,6 @@ var icon_color := Color.WHITE
 @export_range(0, 10, 1, "or_greater")
 var station_type := 0
 
-var passenger_scene = preload("res://passengers/passenger.tscn")
-
 static var stations : Array[Station] = []
 
 var connected_lines : Array[Line] = []
@@ -21,7 +20,7 @@ var connected_lines : Array[Line] = []
 var station_traffic := 0
 
 var station_max_capacity := 6
-	
+
 func _ready() -> void:
 	station_type = stations.size()
 	icon_color.h = fmod(icon_color.h + 1.61803 * station_type, 1)
