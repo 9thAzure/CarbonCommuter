@@ -9,19 +9,17 @@ extends Node
 var shape_cast: ShapeCast2D
 
 #Adding the stations
-@onready var station: Station = $Station
-@onready var station_2: Station = $Station2
-@onready var station_3: Station = $Station3
-@onready var station_4: Station = $Station4
-@onready var station_5: Station = $Station5
-@onready var station_6: Station = $Station6
-@onready var station_7: Station = $Station7
-
-
+#@onready var station: Station = $Station
+#@onready var station_2: Station = $Station2
+#@onready var station_3: Station = $Station3
+#@onready var station_4: Station = $Station4
+#@onready var station_5: Station = $Station5
+#@onready var station_6: Station = $Station6
+#@onready var station_7: Station = $Station7
 
 func _ready():
-	var starting_stations: Array[Station] = [station, station_2, station_3, station_4, station_5, station_6, station_7]
-	Station.stations.append_array(starting_stations)
+#	var starting_stations: Array[Station] = [station, station_2, station_3, station_4, station_5, station_6, station_7]
+#	Station.stations.append_array(starting_stations)
 	print(Station.stations[0])
 
 
@@ -53,7 +51,6 @@ func spawn_station():
 	print(newStation.position)
 	newStation.station_type = randi_range(0, 2)
 	add_child(newStation)
-	Station.stations.append(newStation)
 
 func find_valid_spawn_position() -> Vector2:
 	for attempt in range(max_spawn_attempts):
@@ -78,11 +75,14 @@ func get_random_spawn_position() -> Vector2:
 func _process(_delta: float) -> void:
 	# Calculate total emissions from all lines
 	var total_emissions = 0.0
+	var total_cost := 1000.0
 	for l in Line.list_of_lines:
 		total_emissions += l.calculate_emissions()
+		total_cost -= l.calculate_carbon_cost()
 	
 	if hud:
 		hud.current_emissions = total_emissions
+		hud.carbon_budget = total_cost
 
 
 func _on_game_timer_timeout() -> void:
