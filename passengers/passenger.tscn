@@ -5,6 +5,7 @@
 [node name="Passenger" type="PathFollow2D"]
 loop = false
 script = ExtResource("1_1b4v4")
+impatiance_countdown = 0.05
 speed = 1
 drive_pollution_rate = 1
 

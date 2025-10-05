@@ -4,7 +4,7 @@ class_name Passenger
 @export_range(0.1, 10, 0.1, "or_greater")
 var icon_size := 5.0
 
-@export_range(0.1, 10, 0.1, "or_greater")
+@export_range(0, 10, 0.001, "or_greater")
 var impatiance_countdown := 1.0
 
 @export_range(0.1, 10, 0.1, "or_greater", "hide_slider")
