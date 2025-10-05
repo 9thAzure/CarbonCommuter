@@ -40,6 +40,7 @@ static var list_of_lines : Array[Line] = []
 @onready
 var path_2d: Path2D = $"Path2D"
 
+func is_full() -> bool: return path_2d.get_child_count() >= vehicles_on_line
 
 const MODE_PROPERTIES := {
 	LineType.BUS: {
@@ -47,6 +48,7 @@ const MODE_PROPERTIES := {
 		"cost_multiplier": 1.0,
 		"speed_multiplier": 1.0,
 		"max_vehicles" : 15,
+		"vehicle_cost" : 10,
 		"color": Color.RED
 	},
 	LineType.METRO: {
@@ -54,6 +56,7 @@ const MODE_PROPERTIES := {
 		"cost_multiplier": 3.0,      # But expensive to build
 		"speed_multiplier": 2.0,     # And faster
 		"max_vehicles": 5,
+		"vehicle_cost" : 10,
 		"color": Color.BLUE
 	},
 	LineType.BIKE: {

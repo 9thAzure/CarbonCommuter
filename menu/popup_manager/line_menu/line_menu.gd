@@ -30,8 +30,9 @@ func _on_destroy_button_pressed() -> void:
 func _on_confirm_pressed() -> void:
 	var new_count := %VehicleCountEditor.value as int
 	%VehicleCountEditButton.text = "Vehicles: " + str(new_count)
+	var change := new_count - current_line.vehicles_on_line
 	current_line.vehicles_on_line = new_count
-	# cost?
+	EmissionTracker.total_emitted += max(0, change) * Line.MODE_PROPERTIES[current_line.line_type]["vehicle_cost"]
 
 func _on_cancel_pressed() -> void:
 	%VehicleCountEditor.value = current_line.vehicles_on_line

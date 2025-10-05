@@ -55,7 +55,7 @@ func _process(delta: float) -> void:
 		var next_line := get_next_connection()
 		if not next_line:
 			time_factor *= 4
-		elif randf() < 0.01:
+		elif not next_line.is_full():
 			time_factor = 0.5
 			var path2d := next_line.path_2d
 			assert(path2d is Path2D)
@@ -63,6 +63,8 @@ func _process(delta: float) -> void:
 			direction = 1 if is_same(next_line.station2, path[0][0]) else -1
 			@warning_ignore("integer_division")
 			progress_ratio = (-direction + 1) / 2
+		else:
+			time_factor *= 2
 
 		if randf() < 0.01:
 			recalculate_path()
