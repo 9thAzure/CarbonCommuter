@@ -230,9 +230,6 @@ func get_line_path() -> PackedVector2Array:
 	straight_change /= 2
 	return PackedVector2Array([position1, position1 + straight_change, position2 - straight_change, position2])
 
-	straight_change /= 2
-	return PackedVector2Array([position1, position1 + straight_change, position2 - straight_change, position2])
-
 func refresh_path() -> void:
 	update_path()
 
@@ -282,7 +279,7 @@ func create_circle_texture(radius: int, color: Color = Color.WHITE) -> ImageText
 		for y in size:
 			var dx = x - radius
 			var dy = y - radius
-			var distance = sqrt(dx * dx + dy * dy)
+			distance = sqrt(dx * dx + dy * dy)
 			
 			if distance <= radius:
 				img.set_pixel(x, y, color)
