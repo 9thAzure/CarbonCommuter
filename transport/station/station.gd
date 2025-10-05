@@ -19,6 +19,9 @@ var connected_lines : Array[Line] = []
 var station_traffic := 0
 	
 func _ready() -> void:
+	station_type = stations.size()
+	icon_color.h = fmod(icon_color.h + 1.61803 * station_type, 1)
+	stations.push_back(self)
 	TransportGrid.grid.add_station(self)
 
 func _draw() -> void:
