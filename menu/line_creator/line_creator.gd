@@ -51,7 +51,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		line.station2 = station
 		line.line_type = line_type as Line.LineType
 		if hud:
-			hud.spend_budget(line.carbon_cost)
+			hud.update_units(line.carbon_cost)
 		
 		assert(line_root)
 		line_root.add_child(line)

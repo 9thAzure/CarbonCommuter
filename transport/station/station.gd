@@ -92,7 +92,7 @@ func spawn_passenger():
 func _on_overcrowding_timer_timeout() -> void:
 	overcrowding_timer.stop()
 	print("Overcrowded!")
-	Stats.add_emissions((station_traffic - station_max_capacity) * Stats.emissions_per_car)
+	Stats.add_current_average_emissions((station_traffic - station_max_capacity) * Stats.emissions_per_car)
 	station_traffic = station_max_capacity
 
 
