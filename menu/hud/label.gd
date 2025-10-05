@@ -9,9 +9,23 @@ static var emissions_per_car = 10
 @onready var emissions_label = %EmissionLabel
 @onready var budget_label = %BudgetLabel
 #@onready var budget_bar =
-
 func _ready() -> void:
+	# Make UI non-blocking
+	
+	# Make all children ignore mouse too
+	for child in get_children():
+		if child is Control:
+			child.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			# Recursively set for nested children
+			_set_mouse_filter_recursive(child)
+	
 	update_display()
+
+func _set_mouse_filter_recursive(node: Node) -> void:
+	for child in node.get_children():
+		if child is Control:
+			child.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			_set_mouse_filter_recursive(child)
 
 func _process(_delta: float) -> void:
 	update_display()
