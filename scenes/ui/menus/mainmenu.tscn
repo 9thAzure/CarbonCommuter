@@ -1,0 +1,58 @@
+[gd_scene load_steps=7 format=3 uid="uid://blccn84b70aei"]
+
+[ext_resource type="FontFile" uid="uid://ctgaf2gwyca0v" path="res://scenes/ui/fonts/PoiretOne-Regular.ttf" id="1_ll38k"]
+[ext_resource type="Script" uid="uid://duti1dyqevkhw" path="res://scenes/ui/menus/label_2.gd" id="2_h4tuc"]
+[ext_resource type="Texture2D" uid="uid://b3blcfdhgfo7r" path="res://scenes/ui/iamges/HackTheValleyMainMenu.png" id="2_urxyx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h4tuc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yty8x"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v1vx3"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 388.0
+offset_top = 320.0
+offset_right = 510.0
+offset_bottom = 399.0
+size_flags_horizontal = 4
+focus_neighbor_top = NodePath("../Label")
+focus_neighbor_bottom = NodePath("../Label")
+focus_next = NodePath("../Label")
+focus_previous = NodePath("../Label")
+theme_override_fonts/font = ExtResource("1_ll38k")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxEmpty_h4tuc")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_yty8x")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_v1vx3")
+text = "Start"
+script = ExtResource("2_h4tuc")
+
+[node name="Label" type="Label" parent="."]
+texture_filter = 2
+layout_mode = 0
+offset_right = 900.0
+offset_bottom = 322.0
+size_flags_vertical = 3
+theme_override_constants/line_spacing = 3
+theme_override_fonts/font = ExtResource("1_ll38k")
+theme_override_font_sizes/font_size = 92
+text = "Eco Mini Metro"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HackTheValleyMainMenu" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(575, 324)
+texture = ExtResource("2_urxyx")
+
+[connection signal="pressed" from="Label2" to="Label2" method="_on_pressed"]
